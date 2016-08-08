@@ -1,0 +1,68 @@
+ADMIN_PASSWORD=secret
+DATABASE_PASSWORD=$ADMIN_PASSWORD
+RABBIT_PASSWORD=$ADMIN_PASSWORD
+SERVICE_PASSWORD=$ADMIN_PASSWORD
+HOST_IP=192.168.132.152
+DEST=/opt/stack/
+LOGDIR=$DEST/logs
+LOGFILE=$LOGDIR/stack.sh.log
+LOG_COLOR=False
+DEFAULT_INSTANCE_TYPE=m1.tiny
+# Define images to be automatically downloaded during the DevStack built process.
+DOWNLOAD_DEFAULT_IMAGES=False
+IMAGE_URLS="http://images.trystack.cn/cirros/cirros-0.3.4-x86_64-disk.img"
+#OFFLINE=True
+RECLONE=false
+# use TryStack git mirror
+GIT_BASE=http://git.trystack.cn
+NOVNC_REPO=http://git.trystack.cn/kanaka/noVNC.git
+SPICE_REPO=http://git.trystack.cn/git/spice/spice-html5.git
+IP_VERSION=4
+SERVICE_IP_VERSION=4
+KEYSTONE_TOKEN_FORMAT=UUID
+
+## Neutron options
+Q_USE_SECGROUP=True
+FLOATING_RANGE="192.168.132.0/24"
+FIXED_RANGE="10.0.0.0/24"
+Q_FLOATING_ALLOCATION_POOL=start=192.168.132.200,end=192.168.132.230
+PUBLIC_NETWORK_GATEWAY="192.168.132.2"
+Q_L3_ENABLED=True
+PUBLIC_INTERFACE=eth1
+Q_USE_PROVIDERNET_FOR_PUBLIC=True
+OVS_PHYSICAL_BRIDGE=br-ex
+PUBLIC_BRIDGE=br-ex
+OVS_BRIDGE_MAPPINGS=public:br-ex
+
+
+#disable_service heat
+enable_service heat h-api h-api-cfn h-api-cw h-eng
+enable_service s-proxy
+enable_service s-object
+enable_service s-container
+enable_service s-account
+
+disable_service n-net
+enable_service q-svc
+enable_service q-agt
+enable_service q-dhcp
+enable_service q-l3
+enable_service q-meta
+enable_service neutron
+
+#enable_plugin murano git://git.openstack.org/openstack/murano
+enable_plugin solum git://git.openstack.org/openstack/solum
+SOLUM_INSTALL_DRONE=True
+SOLUM_DRONE_URL=http://f4e976e84d9bb06108f6-ff40fde470ff7ecea31955ec7c479471.r49.cf2.rackcdn.com/drone.deb
+
+VIRT_DRIVER=vm
+SOLUM_IMAGE_FORMAT=vm
+
+# Enable solum services
+enable_service solum
+enable_service solum-api
+enable_service solum-conductor
+enable_service solum-deployer
+enable_service solum-worker
+
+SWIFT_HASH=m
